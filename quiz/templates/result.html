@@ -1,0 +1,111 @@
+{% extends "layout.html" %} {% block title %}Quiz Results{% endblock %}
+
+<!--  -->
+{% block body %}
+<div class="result-container">
+  <h2>Quiz Results</h2>
+  <p>Your Score: {{ score }}%</p>
+  <p>Correct Answers: {{ correct_count }} out of {{ total_questions }}</p>
+
+  <div class="user-answers">
+    <ul class="results-list">
+      {% for key, answer in user_answers.items %}
+      <li>
+        <h3>{{ key }}. {{ answer.question }}</h3>
+        <p>
+          Your Answer: {{ answer.user_answer }} -
+          <span class="{{ answer.is_correct|yesno:'correct,incorrect' }}">
+            {{ answer.is_correct|yesno:'Correct,Incorrect' }}
+          </span>
+        </p>
+        <p>Correct Answer: {{ answer.correct_answer }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <a href="{% url 'generate_quiz' %}" class="quiz-button">Try Again</a>
+</div>
+
+<style>
+  body {
+    font-family: "Roboto", sans-serif;
+    background-color: #f9fafc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .result-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .result-container h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .result-container p {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+  }
+
+  .results-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+
+  .results-list li {
+    margin-bottom: 15px;
+    padding: 20px;
+    background-color: #f1f4f7;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #444;
+  }
+
+  .results-list li p {
+    margin: 0;
+  }
+
+  .results-list li span.correct {
+    color: #28a745;
+    font-weight: bold;
+  }
+
+  .results-list li span.incorrect {
+    color: #dc3545;
+    font-weight: bold;
+  }
+
+  .quiz-button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .quiz-button:hover {
+    background-color: #0056b3;
+  }
+</style>
+{% endblock %}

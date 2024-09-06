@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+<!--  -->
+{% block title %}Generate a Quiz{% endblock %}
+<!--  -->
+{% block body %}
+<div class="form-container">
+  <h1>Generate a Quiz</h1>
+  <form method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Generate Quiz</button>
+  </form>
+</div>
+
+<style>
+  body {
+    font-family: "Roboto", sans-serif;
+    background-color: #f7f9fc;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .form-container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input[type="text"],
+  textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  button {
+    padding: 14px 20px;
+    background-color: #0d98ba;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+  }
+
+  button:hover {
+    background-color: #007fa0;
+  }
+</style>
+{% endblock %}

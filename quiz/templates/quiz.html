@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+<!--  -->
+{% block title %}Take the Quiz{% endblock %}
+<!--  -->
+{% block body %}
+<div class="quiz-container">
+  {% if quiz_data %}
+  <form method="POST" action="{% url 'check_quiz' %}">
+    {% csrf_token %} {% for item in quiz_data %}
+    <div class="quiz-container">
+      <h2>{{ forloop.counter }}. {{ item.question }}</h2>
+      <ul class="options">
+        {% for option in item.options %}
+        <li
+          onclick="selectOption(this, '{{ forloop.counter }}')"
+          data-value="{{ option }}"
+        >
+          {{ option }}
+        </li>
+        {% endfor %}
+      </ul>
+      <input
+        type="hidden"
+        name="answer_{{ forloop.counter }}"
+        id="answer_{{ forloop.counter }}"
+      />
+    </div>
+    {% endfor %}
+    <button type="submit" class="quiz-button">Submit Quiz</button>
+  </form>
+  {% endif %}
+</div>
+
+<script>
+  function selectOption(selectedLi, questionIndex) {
+    const options = selectedLi.parentNode.querySelectorAll("li");
+    options.forEach((option) => option.classList.remove("selected"));
+    selectedLi.classList.add("selected");
+    document.getElementById("answer_" + questionIndex).value =
+      selectedLi.getAttribute("data-value");
+  }
+</script>
+
+<style>
+  body {
+    font-family: "Roboto", sans-serif;
+    background-color: #f9fafc;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .quiz-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+
+  h2 {
+    font-size: 20px;
+    color: #0056b3;
+  }
+
+  .options {
+    list-style: none;
+    padding: 0;
+  }
+
+  .options li {
+    background-color: #f1f4f7;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 16px;
+    color: #444;
+  }
+
+  .options li:hover {
+    background-color: #e2e6ea;
+  }
+
+  .options li.selected {
+    background-color: #0d98ba;
+    color: white;
+  }
+
+  .quiz-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 50px;
+    background-color: #0d98ba;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+  }
+
+  .quiz-button:hover {
+    background-color: #007fa0;
+  }
+
+  @media (max-width: 600px) {
+    .quiz-container {
+      width: 100%;
+    }
+  }
+</style>
+{% endblock %}

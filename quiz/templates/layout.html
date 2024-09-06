@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Quiz App{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f7f9fc;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      nav {
+        background-color: #0d98ba;
+        padding: 15px 20px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-size: 16px;
+      }
+
+      nav .brand {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      nav .nav-links {
+        display: flex;
+      }
+
+      nav .nav-links a:hover {
+        text-decoration: underline;
+      }
+
+      .toggle-btn {
+        display: none;
+      }
+
+      .content {
+        flex: 1;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      footer {
+        background-color: #0d98ba;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        margin-top: auto;
+      }
+
+      footer p {
+        margin: 0;
+      }
+
+      @media (max-width: 768px) {
+        nav .nav-links {
+          display: none;
+        }
+        nav .toggle-btn {
+          display: inline-block;
+          cursor: pointer;
+        }
+        nav .nav-links.active {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="brand"><a href="{% url 'generate_quiz' %}">Quiz App</a></div>
+      <div class="nav-links"></div>
+      <i class="fas fa-bars toggle-btn"></i>
+    </nav>
+
+    <div class="content">{% block body %} {% endblock %}</div>
+
+    <footer>
+      <p>&copy; 2024 Quiz App. All rights reserved.</p>
+    </footer>
+
+    <script>
+      document
+        .querySelector(".toggle-btn")
+        .addEventListener("click", function () {
+          const navLinks = document.querySelector(".nav-links");
+          navLinks.classList.toggle("active");
+        });
+    </script>
+  </body>
+</html>
